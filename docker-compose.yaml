@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    image: estheruge/backend-service:v1.0
+    container_name: backend_container
+    ports:
+      - "5000:5000"
+    networks:
+      - custom_network
+    depends_on:
+      - mongo  # backend depends on a MongoDB service
+
+
+  client:
+    build: ./client
+    image: estheruge/client-service:v1.0
+    container_name: client_container
+    ports:
+      - "3000:3000"  # Map port 3000 of the container to port 3000 on the host
+    depends_on:
+      - backend
+    networks:
+      - custom_network
+    stdin_open: true
+    tty: true
+
+  # MongoDB
+  mongo:
+    image: mongo:latest
+    container_name: mongo_container
+    networks:
+     - custom_network
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+    
+networks:
+  custom_network:
+    driver: bridge
+    attachable: true
+    ipam:
+      config:
+        - subnet: 10.3.0.0/28
+          ip_range: 10.3.0.0/28
+
+  
+
+volumes:
+  mongo_data:
+    driver: local
