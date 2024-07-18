@@ -23,7 +23,7 @@ The Dockerfile includes directives to define the build process for each service.
 
 Docker Compose is used to manage multi-container applications. Networking and port allocation are configured in the `docker-compose.yml` file:
 
-```yaml
+```
 version: '3.8'
 
 services:
@@ -76,6 +76,7 @@ volumes:
   mongo_data:
     driver: local
 
+```
 
 #### In this setup:
 
@@ -88,11 +89,11 @@ volumes:
 
 Volumes ensure persistent data storage. In the `docker-compose.yml`:
 
-```yaml
+```
 volumes:
   mongo_data:
     driver: local
-
+```
 
 ## 5 .Git Workflow
 
