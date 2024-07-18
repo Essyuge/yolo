@@ -1,54 +1,51 @@
 version: '3.8'
 
 services:
+  # Backend service configuration
   backend:
-    build: ./backend
-    image: estheruge/backend-service:v1.0
-    container_name: backend_container
+    build: ./backend  # Build the backend service using the Dockerfile in the ./backend directory
+    image: estheruge/backend-service:v1.0.0  # Tag the built image with a specific version
+    container_name: backend_container  # Name of the backend container
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/yolomy  # Set the MongoDB connection URI for the backend
     ports:
-      - "5000:5000"
+      - "5000:5000"  # Map port 5000 of the container to port 5000 on the host
     networks:
-      - custom_network
+      - custom_network  # Attach backend service to the custom network
     depends_on:
-      - mongo  # backend depends on a MongoDB service
+      - mongo  # Ensure MongoDB service is started before the backend service
 
-
+  # Client service configuration
   client:
-    build: ./client
-    image: estheruge/client-service:v1.0
-    container_name: client_container
+    build: ./client  # Build the client service using the Dockerfile in the ./client directory
+    image: estheruge/client-service:v1.0.0  # Tag the built image with a specific version
+    container_name: client_container  # Name of the client container
+    environment:
+      - NODE_ENV=production  # Set Node.js environment to production
     ports:
       - "3000:3000"  # Map port 3000 of the container to port 3000 on the host
     depends_on:
-      - backend
+      - backend  # Ensure backend service is started before the client service
     networks:
-      - custom_network
-    stdin_open: true
-    tty: true
+      - custom_network  # Attach client service to the custom network
+    stdin_open: true  # Keep stdin open so container can accept input
+    tty: true  # Allocate a pseudo-TTY for the container, useful for debugging
 
-  # MongoDB
+  # MongoDB service configuration
   mongo:
-    image: mongo:latest
-    container_name: mongo_container
+    image: mongo:latest  # Use the latest MongoDB Docker image
+    container_name: mongo_container  # Name of the MongoDB container
     networks:
-     - custom_network
+     - custom_network  # Attach MongoDB service to the custom network
     ports:
-      - "27017:27017"
+      - "27017:27017"  # Map port 27017 of the container to port 27017 on the host
     volumes:
-      - mongo_data:/data/db
+      - mongo_data:/data/db  # Mount a volume named 'mongo_data' for MongoDB data persistence
 
-    
 networks:
   custom_network:
-    driver: bridge
-    attachable: true
-    ipam:
-      config:
-        - subnet: 10.3.0.0/28
-          ip_range: 10.3.0.0/28
-
-  
+    driver: bridge  # Use the bridge network driver for the custom network
 
 volumes:
   mongo_data:
-    driver: local
+    driver: local  # Use the local volume driver for 'mongo_data' volume
