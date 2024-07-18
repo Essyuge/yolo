@@ -1,5 +1,5 @@
 # Build stage
-FROM node:16-alpine3.16 as build
+FROM node:14-alpine3.16 as build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -12,6 +12,10 @@ RUN npm install
 
 # Copy the rest of the client application code to the working directory
 COPY . .
+
+# Build the application and  remove development dependencies
+RUN npm run build && \
+    npm prune --production
 
 # Production stage
 FROM node:16-alpine3.16 as production-stage
