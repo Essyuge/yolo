@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+
+  roles:
+    - role: test-connectivity
+    - role: update-server
+    - role: install-docker
+    - role: clone-repository
+    - role: frontend
+    - role: database
+    - role: backend
+    - role: run-docker-compose
