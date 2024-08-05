@@ -1,0 +1,5 @@
+---
+# vars file for clone-repository
+
+github_repo: https://github.com/Essyuge/yolo
+destination: src

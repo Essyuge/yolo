@@ -1,0 +1,7 @@
+---
+# tasks file for database
+- name: "pull {{ image }}:{{ image_tag }}"
+  ansible.builtin.docker_image:
+    name: "{{ image }}"
+    tag: "{{ image_tag }}"
+    source: pull

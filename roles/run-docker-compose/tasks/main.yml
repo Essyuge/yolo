@@ -1,0 +1,13 @@
+---
+# tasks file for run-docker-compose
+
+- name: Install Docker Compose
+  apt:
+    name: docker-compose
+    state: present
+
+- name: Run containers
+  become: True
+  shell:
+    cmd: "docker-compose -f docker-compose.yaml up -d"
+    chdir: /home/vagrant/src

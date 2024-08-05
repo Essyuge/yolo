@@ -1,0 +1,5 @@
+---
+# vars file for backend
+
+image: estheruge/backend-service
+image_tag: v1.0.0

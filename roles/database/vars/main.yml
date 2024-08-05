@@ -1,0 +1,4 @@
+---
+# vars file for database
+image: mongo
+image_tag: latest

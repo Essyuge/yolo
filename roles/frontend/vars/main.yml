@@ -1,0 +1,5 @@
+---
+# vars file for frontend
+
+image: estheruge/client-service
+image_tag: v1.0.0
