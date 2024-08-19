@@ -2,12 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: client-service
-  labels:
-    app: shop-app
 spec:
-  type: LoadBalancer 
-  ports:
-    - port: 5000        
-      targetPort: 5000  
   selector:
-    app: shop-app       
+    app: shop-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
