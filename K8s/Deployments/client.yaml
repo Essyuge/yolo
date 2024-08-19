@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+  labels:
+    app: shop-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shop-app
+  template:
+    metadata:
+      labels:
+        app: shop-app
+    spec:
+      containers:
+      - name: client-container
+        image: estheruge/client-service:v1.0.0
+        ports:
+        - containerPort: 3000
