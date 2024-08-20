@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: estheruge/clientimg:v1.1.0.1
+        image: estheruge/clientimg:v1.1.0.2
         ports:
         - containerPort: 3000
 ---
@@ -28,5 +28,5 @@ spec:
     app: client
   ports:
   - protocol: TCP
-    port: 3000
+    port: 80
     targetPort: 3000
